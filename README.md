@@ -1,3 +1,5 @@
-# jb-01_obsfuxia-
+# Obsfuxia
+
+JS-powered text obfuscator with chaining.
 
 [This](https://snaykey.pythonanywhere.com/) to be ported here
