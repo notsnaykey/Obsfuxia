@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Obfuscation</title>
+</head>
+<body>
+    <h1>Text Obfuscation</h1>
+    <form id="obfuscationForm">
+        <label for="method">Obfuscation Method:</label>
+        <select id="method">
+            <option value="Base64">Base64</option>
+            <option value="CaesarCipher">Caesar Cipher</option>
+            <option value="Reverse">Reverse</option>
+            <option value="Whitespace">Whitespace</option>
+            <option value="UTF8">UTF-8</option>
+            <option value="Hexadecimal">Hexadecimal</option>
+            <option value="Binary">Binary</option>
+            <option value="ROT13">ROT13</option>
+            <option value="Atbash">Atbash</option>
+            <option value="VigenereCipher">Vigenere Cipher</option>
+        </select>
+        <br>
+        <label for="text">Text:</label>
+        <textarea id="text" rows="4" cols="50"></textarea>
+        <br>
+        <button type="button" id="obfuscateButton">Obfuscate</button>
+        <button type="button" id="deobfuscateButton">Deobfuscate</button>
+    </form>
+    <h2>Result</h2>
+    <p id="result"></p>
+    <script src="script.js"></script>
+    <script src="Base64.js"></script>
+    <script src="CaesarCipher.js"></script>
+    <script src="Reverse.js"></script>
+    <script src="Whitespace.js"></script>
+    <script src="UTF8.js"></script>
+    <script src="Hexadecimal.js"></script>
+    <script src="Binary.js"></script>
+    <script src="ROT13.js"></script>
+    <script src="Atbash.js"></script>
+    <script src="VigenereCipher.js"></script>
+</body>
+</html>
