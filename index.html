@@ -7,310 +7,128 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-purple: #8b5cf6;
-            --color-cyan: #22d3ee;
-            --color-pink: #ec4899;
-            --color-bg: #111827;
-            --color-darker: #0a0f1a;
-            --color-text: #ffffff;
-            --color-gray: #4b5563;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Space Mono', monospace;
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            padding: 10px;
-            line-height: 1.4;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 2px solid var(--color-purple);
-        }
-
-        .header h1 {
-            color: var(--color-cyan);
-            font-size: 1.2em;
-            border: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .header .meta {
-            color: var(--color-gray);
-            font-size: 0.8em;
-            text-align: right;
-        }
-
-        .methods-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 5px;
-            padding: 10px;
-            background: var(--color-darker);
-            border: 1px solid var(--color-purple);
-            margin-bottom: 10px;
-        }
-
-        .method-box {
-            position: relative;
-            padding: 8px;
-            background: rgba(139, 92, 246, 0.1);
-            border: 1px solid var(--color-purple);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .method-box:hover {
-            background: rgba(139, 92, 246, 0.2);
-        }
-
-        .method-box label {
-            display: block;
-            cursor: pointer;
-            font-size: 0.8em;
-            text-align: center;
-        }
-
-        .chain-controls {
-            display: flex;
-            gap: 5px;
-            margin: 5px 0;
-        }
-
-        .chain-controls button {
-            background: none;
-            border: 1px solid var(--color-purple);
-            padding: 5px 10px;
-            color: white;
-            cursor: pointer;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.9em;
-        }
-
-        .chain-controls button:hover {
-            background: rgba(139, 92, 246, 0.2);
-        }
-
-        .chain-display {
-            margin: 10px 0;
-            padding: 8px;
-            background: var(--color-darker);
-            border: 1px solid var(--color-cyan);
-            font-size: 0.9em;
-            color: var(--color-cyan);
-            min-height: 35px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            align-items: center;
-        }
-
-        .chain-item {
-            background: rgba(34, 211, 238, 0.1);
-            border: 1px solid var(--color-cyan);
-            padding: 3px 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .chain-item:hover {
-            background: rgba(34, 211, 238, 0.2);
-        }
-
-        .chain-arrow {
-            color: var(--color-pink);
-            margin: 0 2px;
-            user-select: none;
-        }
-
-        .chain-item-remove {
-            color: var(--color-pink);
-            margin-left: 5px;
-            font-size: 0.8em;
-        }
-
-        textarea {
-            width: 100%;
-            height: 80px;
-            resize: vertical;
-            margin: 5px 0;
-            padding: 5px;
-            background: #1f2937;
-            border: 1px solid var(--color-purple);
-            color: white;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.9em;
-        }
-
-        .direction-toggle {
-            display: flex;
-            gap: 5px;
-            margin: 5px 0;
-        }
-
-        .direction-toggle button {
-            flex: 1;
-            background: none;
-            border: 1px solid var(--color-cyan);
-            padding: 5px 10px;
-            color: white;
-            cursor: pointer;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.9em;
-        }
-
-        .direction-toggle button.active {
-            background: var(--color-cyan);
-        }
-
-        #result {
-            padding: 10px;
-            background: #1f2937;
-            border: 1px solid var(--color-cyan);
-            margin-top: 10px;
-            word-break: break-all;
-            max-height: 150px;
-            overflow-y: auto;
-            font-size: 0.9em;
-        }
-
-        .method-modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--color-darker);
-            border: 2px solid var(--color-purple);
-            padding: 15px;
-            z-index: 1000;
-        }
-
-        .method-modal.active {
-            display: block;
-        }
-
-        .method-modal input[type="number"],
-        .method-modal input[type="text"] {
-            width: 100%;
-            padding: 5px;
-            margin: 5px 0;
-            background: #1f2937;
-            border: 1px solid var(--color-purple);
-            color: white;
-            font-family: 'Space Mono', monospace;
-        }
-
-        .method-modal-buttons {
-            display: flex;
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        .method-modal-buttons button {
-            flex: 1;
-            padding: 5px;
-            background: none;
-            border: 1px solid var(--color-cyan);
-            color: white;
-            cursor: pointer;
-        }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-        }
-
-        .modal-overlay.active {
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <h1>OBSFUXIA</h1>
-        <div class="meta">
-            <div id="datetime"></div>
-            <div id="username"></div>
+    <!-- Grid background -->
+    <div class="grid-background"></div>
+
+    <div class="app-container">
+        <div class="header">
+            <h1>OBSFUXIA</h1>
+            <div class="meta">
+                <div id="username">WIP by @snaykey</div>
+                <!-- Removed datetime display as it wasn't updated by JS -->
+                <!-- <div id="datetime">Loading...</div> -->
+            </div>
+        </div>
+
+        <div class="methods-panel">
+            <div class="category collapsed" id="encoding-category"> <!-- Start collapsed -->
+                <div class="category-header">
+                    <span>▶ Encoding</span>
+                </div>
+                <div class="category-methods">
+                    <div class="method-box" data-method="Base64">
+                        Base64
+                        <span class="info-icon" title="Encodes text to Base64, a binary-to-text encoding that represents binary data in ASCII format. Often used for email attachments and basic data obfuscation.">?</span>
+                    </div>
+                    <div class="method-box" data-method="Hexadecimal">
+                        Hex
+                        <span class="info-icon" title="Converts each character to its hexadecimal (base 16) ASCII value. Each character becomes a 2-digit hex code.">?</span>
+                    </div>
+                    <div class="method-box" data-method="Binary">
+                        Binary
+                        <span class="info-icon" title="Converts each character to its binary (base 2) representation. Each character becomes an 8-bit sequence of 0s and 1s.">?</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category collapsed" id="cipher-category"> <!-- Start collapsed -->
+                <div class="category-header">
+                    <span>▶ Substitution</span>
+                </div>
+                <div class="category-methods">
+                    <div class="method-box" data-method="ROT13">
+                        ROT13
+                        <span class="info-icon" title="Rotates each letter 13 positions in the alphabet. Self-reciprocal cipher (applying it twice returns the original text). Only affects A-Z.">?</span>
+                    </div>
+                    <div class="method-box" data-method="Caesar" data-customizable="true">
+                        Caesar
+                        <span class="info-icon" title="Shifts each letter (A-Z) by a fixed number of positions (1-25) in the alphabet. Named after Julius Caesar who used it with a shift of 3.">?</span>
+                    </div>
+                    <div class="method-box" data-method="Vigenere" data-customizable="true">
+                        Vigenère
+                        <span class="info-icon" title="Uses a keyword (letters A-Z only) to determine variable shift values for each letter. More secure than Caesar cipher. Case is preserved.">?</span>
+                    </div>
+                    <div class="method-box" data-method="Atbash">
+                        Atbash
+                        <span class="info-icon" title="Substitutes each letter with its reverse position in the alphabet (A→Z, B→Y, etc). Ancient cipher. Case is preserved.">?</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category collapsed" id="transform-category"> <!-- Start collapsed -->
+                <div class="category-header">
+                    <span>▶ Transform</span>
+                </div>
+                <div class="category-methods">
+                    <div class="method-box" data-method="Reverse">
+                        Reverse
+                        <span class="info-icon" title="Simply reverses the order of characters in the text. First character becomes last, and so on. Handles Unicode correctly.">?</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-panel">
+            <div class="chain-section">
+                <!-- Chain display area (filled by JS) -->
+                <div class="chain-display" id="chainDisplay">
+                    <!-- Content generated by JS -->
+                </div>
+                <!-- Controls moved OUTSIDE the display area -->
+                <div class="chain-controls">
+                    <button type="button" id="reverseChainButton" title="Reverse the order of steps in the chain">REVERSE</button>
+                    <button type="button" id="clearChainButton" title="Remove all steps from the chain">CLEAR</button>
+                </div>
+            </div>
+
+            <div class="input-output-section">
+                <div class="text-container">
+                    <textarea id="text" placeholder="Enter text to process..."></textarea>
+                </div>
+
+                <div class="controls-row"> <!-- Group controls for better layout -->
+                    <div class="process-mode" title="Order to apply methods during Obfuscation">
+                         <span>Process Order:</span>
+                        <button type="button" id="sequentialMode">Sequential</button>
+                        <button type="button" id="reverseMode">Reverse</button>
+                    </div>
+
+                    <div class="direction-toggle">
+                        <button type="button" id="obfuscateButton">Obfuscate ↓</button>
+                        <button type="button" id="deobfuscateButton">Deobfuscate ↑</button>
+                    </div>
+                 </div>
+
+                <div class="result-container">
+                    <div class="result-header">
+                        <span>Output:</span>
+                    </div>
+                    <div id="result"></div> <!-- Output appears here -->
+                </div>
+            </div>
         </div>
     </div>
 
-    <form id="obfuscationForm">
-        <div class="methods-grid" id="methodsGrid">
-            <div class="method-box" data-method="Base64">
-                <label>Base64</label>
-            </div>
-            <div class="method-box" data-method="Reverse">
-                <label>Reverse</label>
-            </div>
-            <div class="method-box" data-method="ROT13">
-                <label>ROT13</label>
-            </div>
-            <div class="method-box" data-method="Caesar" data-customizable="true">
-                <label>Caesar</label>
-            </div>
-            <div class="method-box" data-method="Hexadecimal">
-                <label>Hex</label>
-            </div>
-            <div class="method-box" data-method="Binary">
-                <label>Binary</label>
-            </div>
-            <div class="method-box" data-method="Atbash">
-                <label>Atbash</label>
-            </div>
-            <div class="method-box" data-method="Vigenere" data-customizable="true">
-                <label>Vigenère</label>
-            </div>
-        </div>
-
-        <div class="chain-controls">
-            <button type="button" id="reverseChainButton">Reverse Chain</button>
-            <button type="button" id="clearChainButton">Clear Chain</button>
-        </div>
-
-        <div class="chain-display" id="chainDisplay">
-            Select methods to build chain...
-        </div>
-
-        <textarea id="text" placeholder="Enter text to process..."></textarea>
-
-        <div class="direction-toggle">
-            <button type="button" id="obfuscateButton" class="active">Obfuscate ↓</button>
-            <button type="button" id="deobfuscateButton">Deobfuscate ↑</button>
-        </div>
-
-        <div id="result"></div>
-    </form>
-
+    <!-- Modals -->
     <div class="modal-overlay" id="modalOverlay"></div>
 
     <div id="caesarModal" class="method-modal">
-        <h3>Caesar Cipher Configuration</h3>
-        <input type="number" id="caesarShift" value="3" min="1" max="25" placeholder="Shift amount (1-25)">
+        <h3>Caesar Cipher Shift</h3>
+        <label for="caesarShift">Shift amount (1-25):</label>
+        <input type="number" id="caesarShift" value="3" min="1" max="25" placeholder="Enter shift">
         <div class="method-modal-buttons">
             <button type="button" id="caesarConfirm">Confirm</button>
             <button type="button" class="modal-cancel">Cancel</button>
@@ -318,341 +136,15 @@
     </div>
 
     <div id="vigenereModal" class="method-modal">
-        <h3>Vigenère Cipher Configuration</h3>
-        <input type="text" id="vigenereKey" placeholder="Enter encryption key">
+        <h3>Vigenère Cipher Key</h3>
+         <label for="vigenereKey">Keyword (A-Z only):</label>
+        <input type="text" id="vigenereKey" placeholder="Enter keyword" pattern="[a-zA-Z]+" title="Only letters A-Z are used for the key">
         <div class="method-modal-buttons">
             <button type="button" id="vigenereConfirm">Confirm</button>
             <button type="button" class="modal-cancel">Cancel</button>
         </div>
     </div>
 
-    <script>
-        let obfuscationChain = [];
-        const chainDisplay = document.getElementById('chainDisplay');
-        const methodsGrid = document.getElementById('methodsGrid');
-        const reverseChainButton = document.getElementById('reverseChainButton');
-        const clearChainButton = document.getElementById('clearChainButton');
-        const modalOverlay = document.getElementById('modalOverlay');
-
-        // Update datetime and username
-        function updateDateTime() {
-            const now = new Date();
-            const formatted = now.toISOString().replace('T', ' ').slice(0, 19);
-            document.getElementById('datetime').textContent = formatted + ' UTC';
-            document.getElementById('username').textContent = '@notsnaykey';
-        }
-        updateDateTime();
-        setInterval(updateDateTime, 1000);
-
-        // Method implementations
-        window.Base64 = {
-            obfuscate: function(text) {
-                try {
-                    const utf8 = unescape(encodeURIComponent(text));
-                    return btoa(utf8);
-                } catch (e) {
-                    throw new Error("Invalid input for Base64 encoding");
-                }
-            },
-            deobfuscate: function(text) {
-                try {
-                    const cleaned = text.replace(/[^A-Za-z0-9+/=]/g, '');
-                    const padded = cleaned + '='.repeat((4 - cleaned.length % 4) % 4);
-                    return decodeURIComponent(escape(atob(padded)));
-                } catch (e) {
-                    throw new Error("Invalid Base64 input");
-                }
-            }
-        };
-
-        window.Caesar = {
-            obfuscate: function(text, shift = 3) {
-                return text.replace(/[a-zA-Z]/g, char => {
-                    const code = char.charCodeAt(0);
-                    const base = code >= 97 ? 97 : 65;
-                    return String.fromCharCode(((code - base + shift) % 26) + base);
-                });
-            },
-            deobfuscate: function(text, shift = 3) {
-                return this.obfuscate(text, 26 - (shift % 26));
-            }
-        };
-
-        window.Vigenere = {
-            obfuscate: function(text, key) {
-                if (!key) throw new Error("Vigenère key is required");
-                let result = "";
-                let j = 0;
-                for (let i = 0; i < text.length; i++) {
-                    if (/[a-zA-Z]/.test(text[i])) {
-                        const textChar = text[i].toUpperCase().charCodeAt(0) - 65;
-                        const keyChar = key[j % key.length].toUpperCase().charCodeAt(0) - 65;
-                        const encryptedChar = ((textChar + keyChar) % 26) + 65;
-                        result += String.fromCharCode(encryptedChar);
-                        j++;
-                    } else {
-                        result += text[i];
-                    }
-                }
-                return result;
-            },
-            deobfuscate: function(text, key) {
-                if (!key) throw new Error("Vigenère key is required");
-                let result = "";
-                let j = 0;
-                for (let i = 0; i < text.length; i++) {
-                    if (/[a-zA-Z]/.test(text[i])) {
-                        const textChar = text[i].toUpperCase().charCodeAt(0) - 65;
-                        const keyChar = key[j % key.length].toUpperCase().charCodeAt(0) - 65;
-                        const decryptedChar = ((textChar - keyChar + 26) % 26) + 65;
-                        result += String.fromCharCode(decryptedChar);
-                        j++;
-                    } else {
-                        result += text[i];
-                    }
-                }
-                return result;
-            }
-        };
-
-        window.Reverse = {
-            obfuscate: function(text) {
-                return Array.from(text).reverse().join('');
-            },
-            deobfuscate: function(text) {
-                return Array.from(text).reverse().join('');
-            }
-        };
-
-        window.ROT13 = {
-            process: function(text) {
-                return text.replace(/[a-zA-Z]/g, char => {
-                    const code = char.charCodeAt(0);
-                    const base = code >= 97 ? 97 : 65;
-                    return String.fromCharCode((code - base + 13) % 26 + base);
-                });
-            },
-            obfuscate: function(text) {
-                return this.process(text);
-            },
-            deobfuscate: function(text) {
-                return this.process(text);
-            }
-        };
-
-        window.Hexadecimal = {
-            obfuscate: function(text) {
-                return Array.from(text)
-                    .map(char => char.charCodeAt(0).toString(16).padStart(2, '0'))
-                    .join('');
-            },
-            deobfuscate: function(text) {
-                const cleaned = text.replace(/[^0-9a-fA-F]/g, '');
-                if (cleaned.length % 2 !== 0) throw new Error("Invalid hexadecimal input");
-                return cleaned.match(/.{1,2}/g)
-                    .map(hex => String.fromCharCode(parseInt(hex, 16)))
-                    .join('');
-            }
-        };
-
-        window.Binary = {
-            obfuscate: function(text) {
-                return Array.from(text)
-                    .map(char => char.charCodeAt(0).toString(2).padStart(8, '0'))
-                    .join('');
-            },
-            deobfuscate: function(text) {
-                const cleaned = text.replace(/[^01]/g, '');
-                if (cleaned.length % 8 !== 0) throw new Error("Invalid binary input");
-                return cleaned.match(/.{1,8}/g)
-                    .map(bin => String.fromCharCode(parseInt(bin, 2)))
-                    .join('');
-            }
-        };
-
-        window.Atbash = {
-            process: function(text) {
-                return text.replace(/[a-zA-Z]/g, char => {
-                    const code = char.charCodeAt(0);
-                    if (code >= 65 && code <= 90) {
-                        return String.fromCharCode(90 - (code - 65));
-                    } else {
-                        return String.fromCharCode(122 - (code - 97));
-                    }
-                });
-            },
-            obfuscate: function(text) {
-                return this.process(text);
-            },
-            deobfuscate: function(text) {
-                return this.process(text);
-            }
-        };
-
-        function updateChainDisplay() {
-            const display = document.getElementById('chainDisplay');
-            if (obfuscationChain.length === 0) {
-                display.textContent = 'Select methods to build chain...';
-                return;
-            }
-
-            display.innerHTML = obfuscationChain.map((method, index) => {
-                let methodText;
-                if (typeof method === 'object') {
-                    if (method.method === 'Caesar') {
-                        methodText = `Caesar(${method.shift})`;
-                    } else if (method.method === 'Vigenere') {
-                        methodText = `Vigenère("${method.key}")`;
-                    }
-                } else {
-                    methodText = method;
-                }
-
-                return `
-                    <div class="chain-item" data-index="${index}">
-                        ${methodText}
-                        <span class="chain-item-remove">×</span>
-                    </div>
-                    ${index < obfuscationChain.length - 1 ? '<span class="chain-arrow">→</span>' : ''}
-                `;
-            }).join('');
-
-            document.querySelectorAll('.chain-item').forEach(item => {
-                item.onclick = (e) => {
-                    const index = parseInt(item.dataset.index);
-                    obfuscationChain.splice(index, 1);
-                    updateChainDisplay();
-                };
-            });
-        }
-
-        methodsGrid.addEventListener('click', async (e) => {
-            const methodBox = e.target.closest('.method-box');
-            if (!methodBox) return;
-
-            const method = methodBox.dataset.method;
-            const isCustomizable = methodBox.dataset.customizable === 'true';
-
-            if (isCustomizable) {
-                modalOverlay.classList.add('active');
-                
-                if (method === 'Caesar') {
-                    const modal = document.getElementById('caesarModal');
-                    modal.classList.add('active');
-                    
-                    const handleCaesar = () => {
-                        const shift = parseInt(document.getElementById('caesarShift').value) || 3;
-                        obfuscationChain.push({ method: 'Caesar', shift: shift });
-                        updateChainDisplay();
-                        modal.classList.remove('active');
-                        modalOverlay.classList.remove('active');
-                    };
-
-                    document.getElementById('caesarConfirm').onclick = handleCaesar;
-                } else if (method === 'Vigenere') {
-                    const modal = document.getElementById('vigenereModal');
-                    modal.classList.add('active');
-                    
-                    const handleVigenere = () => {
-                        const key = document.getElementById('vigenereKey').value;
-                        if (key) {
-                            obfuscationChain.push({ method: 'Vigenere', key: key });
-                            updateChainDisplay();
-                        }
-                        modal.classList.remove('active');
-                        modalOverlay.classList.remove('active');
-                    };
-
-                    document.getElementById('vigenereConfirm').onclick = handleVigenere;
-                }
-            } else {
-                obfuscationChain.push(method);
-                updateChainDisplay();
-            }
-        });
-
-        document.querySelectorAll('.modal-cancel').forEach(button => {
-            button.onclick = () => {
-                document.querySelectorAll('.method-modal').forEach(modal => {
-                    modal.classList.remove('active');
-                });
-                modalOverlay.classList.remove('active');
-            };
-        });
-
-        modalOverlay.onclick = () => {
-            document.querySelectorAll('.method-modal').forEach(modal => {
-                modal.classList.remove('active');
-            });
-            modalOverlay.classList.remove('active');
-        };
-
-        reverseChainButton.onclick = () => {
-            obfuscationChain.reverse();
-            updateChainDisplay();
-        };
-
-        clearChainButton.onclick = () => {
-            obfuscationChain = [];
-            updateChainDisplay();
-        };
-
-        function processText(isObfuscating) {
-            const input = document.getElementById('text').value;
-            const result = document.getElementById('result');
-            
-            if (!input || obfuscationChain.length === 0) {
-                result.textContent = 'Please enter text and select at least one method.';
-                return;
-            }
-
-            let processedText = input;
-            const methods = isObfuscating ? obfuscationChain : [...obfuscationChain].reverse();
-            let currentStep = 1;
-
-            try {
-                methods.forEach((method) => {
-                    try {
-                        if (typeof method === 'object') {
-                            if (method.method === 'Caesar') {
-                                processedText = isObfuscating ? 
-                                    window.Caesar.obfuscate(processedText, method.shift) :
-                                    window.Caesar.deobfuscate(processedText, method.shift);
-                            } else if (method.method === 'Vigenere') {
-                                processedText = isObfuscating ?
-                                    window.Vigenere.obfuscate(processedText, method.key) :
-                                    window.Vigenere.deobfuscate(processedText, method.key);
-                            }
-                        } else {
-                            const processor = window[method];
-                            if (processor) {
-                                processedText = isObfuscating ? 
-                                    processor.obfuscate(processedText) : 
-                                    processor.deobfuscate(processedText);
-                            }
-                        }
-                        currentStep++;
-                    } catch (e) {
-                        throw new Error(`Step ${currentStep}: ${e.message}`);
-                    }
-                });
-                result.textContent = processedText;
-            } catch (error) {
-                result.textContent = `Error: ${error.message}`;
-            }
-        }
-
-        document.getElementById('obfuscateButton').onclick = () => {
-            document.getElementById('obfuscateButton').classList.add('active');
-            document.getElementById('deobfuscateButton').classList.remove('active');
-            processText(true);
-        };
-
-        document.getElementById('deobfuscateButton').onclick = () => {
-            document.getElementById('deobfuscateButton').classList.add('active');
-            document.getElementById('obfuscateButton').classList.remove('active');
-            processText(false);
-        };
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
